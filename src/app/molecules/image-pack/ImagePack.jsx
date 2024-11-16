@@ -24,9 +24,6 @@ import { getStateEvent } from '../../utils/room';
 const renameImagePackItem = (shortcode) =>
   new Promise((resolve) => {
     let isCompleted = false;
-const renameImagePackItem = (shortcode) =>
-  new Promise((resolve) => {
-    let isCompleted = false;
 
     openReusableDialog(
       <Text variant="s1" weight="medium">
@@ -56,7 +53,6 @@ const renameImagePackItem = (shortcode) =>
         if (!isCompleted) resolve(null);
       }
     );
-  });
     openReusableDialog(
       <Text variant="s1" weight="medium">
         Rename
@@ -135,13 +131,6 @@ function useUserImagePack() {
         images: {},
       }
     );
-    return ImagePackBuilder.parsePack(
-      mx.getUserId(),
-      packEvent?.getContent() ?? {
-        pack: { display_name: 'Personal' },
-        images: {},
-      }
-    );
   }, [mx]);
 
   const sendPackContent = (content) => {
@@ -161,7 +150,6 @@ function useImagePackHandles(pack, sendPackContent) {
     if (typeof key !== 'string') return undefined;
     let newKey = key?.replace(/\s/g, '_');
     if (pack.getImages().get(newKey)) {
-      newKey = suffixRename(newKey, (suffixedKey) => pack.getImages().get(suffixedKey));
       newKey = suffixRename(newKey, (suffixedKey) => pack.getImages().get(suffixedKey));
     }
     return newKey;
@@ -298,7 +286,6 @@ function ImagePack({ roomId, stateKey, handlePackDelete }) {
       `Are you sure that you want to delete "${pack.displayName}"?`,
       'Delete',
       'danger'
-      'danger'
     );
     if (!isConfirmed) return;
     handlePackDelete(stateKey);
@@ -329,8 +316,6 @@ function ImagePack({ roomId, stateKey, handlePackDelete }) {
         onAvatarChange={canChange ? handleAvatarChange : null}
         onEditProfile={canChange ? handleEditProfile : null}
       />
-      {canChange && <ImagePackUpload onUpload={handleAddItem} />}
-      {images.length === 0 ? null : (
       {canChange && <ImagePackUpload onUpload={handleAddItem} />}
       {images.length === 0 ? null : (
         <div>
@@ -371,11 +356,6 @@ function ImagePack({ roomId, stateKey, handlePackDelete }) {
             <Button variant="danger" onClick={handleDeletePack}>
               Delete Pack
               {viewMore ? 'View less' : `View ${pack.images.size - 2} more`}
-            </Button>
-          )}
-          {handlePackDelete && (
-            <Button variant="danger" onClick={handleDeletePack}>
-              Delete Pack
             </Button>
           )}
         </div>
@@ -444,7 +424,6 @@ function ImagePackUser() {
       />
       <ImagePackUpload onUpload={handleAddItem} />
       {images.length === 0 ? null : (
-      {images.length === 0 ? null : (
         <div>
           <div className="image-pack__header">
             <Text variant="b3">Image</Text>
@@ -473,10 +452,8 @@ function ImagePackUser() {
         </div>
       )}
       {pack.images.size > 2 && (
-      {pack.images.size > 2 && (
         <div className="image-pack__footer">
           <Button onClick={() => setViewMore(!viewMore)}>
-            {viewMore ? 'View less' : `View ${pack.images.size - 2} more`}
             {viewMore ? 'View less' : `View ${pack.images.size - 2} more`}
           </Button>
         </div>
